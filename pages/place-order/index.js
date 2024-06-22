@@ -13,8 +13,6 @@ import { toast } from "react-toastify";
 
 import { useRouter } from "next/router";
 
-import { useSession } from "next-auth/react"; // remove
-
 function PlaceOrder() {
   const {
     state: {
@@ -22,8 +20,6 @@ function PlaceOrder() {
     },
     dispatch,
   } = useContext(CartContext);
-
-  const { data: session } = useSession(); // remove
 
   const router = useRouter();
 
@@ -33,19 +29,12 @@ function PlaceOrder() {
       0
     );
 
-    // const reqBody = {
-    //   orderItems: cartItems,
-    //   shippingData,
-    //   paymentMethod,
-    //   totalPrice,
-    // };
     const reqBody = {
-      user: session.user._id,
       orderItems: cartItems,
       shippingData,
       paymentMethod,
       totalPrice,
-    }; // remove
+    };
 
     const response = await fetch("/api/order", {
       method: "POST",
