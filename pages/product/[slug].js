@@ -46,7 +46,7 @@ function ProductDetail({ loadedProduct }) {
     router.push("/cart");
   }
 
-  if (!loadedProduct) return "Loading...";
+  if (!loadedProduct) return <div>Product Not Found.</div>;
   return (
     <Layout title={loadedProduct.title}>
       <Row className="py-4">
@@ -85,7 +85,7 @@ export async function getServerSideProps({ params: { slug } }) {
   const product = await Product.findOne({ slug }).lean();
 
   return {
-    props: { loadedProduct: db.convertToObject(product) },
+    props: { loadedProduct: product ? db.convertToObject(product) : null },
   };
 }
 
